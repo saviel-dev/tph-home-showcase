@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { MessageCircle, Ruler, Palette } from "lucide-react";
+import { MessageCircle, Ruler, Palette, ShoppingCart } from "lucide-react";
 import { products, type Product } from "@/data/products";
 
 export const Route = createFileRoute("/catalogo")({
@@ -75,18 +75,18 @@ function CatalogPage() {
 }
 
 function ProductCard({ product }: { product: Product }) {
-  const waHref = `https://wa.me/541112345678?text=${encodeURIComponent(
-    `Hola TPH, me interesa el producto "${product.name}". ¿Pueden enviarme más información?`
-  )}`;
+  const handleAddToCart = () => {
+    alert(`"${product.name}" agregado al carrito`);
+  };
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-background transition hover:-translate-y-1 hover:shadow-xl">
-      <div className="aspect-square overflow-hidden bg-muted">
+      <div className="aspect-[4/3] overflow-hidden bg-muted">
         <img
           src={product.image}
           alt={product.name}
-          width={800}
-          height={800}
+          width={600}
+          height={450}
           loading="lazy"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
         />
@@ -117,14 +117,12 @@ function ProductCard({ product }: { product: Product }) {
               <span className="ml-1 text-xs font-medium text-muted-foreground">/m²</span>
             </p>
           </div>
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleAddToCart}
             className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3.5 py-2 text-xs font-semibold text-background transition hover:bg-foreground/85"
           >
-            <MessageCircle size={14} /> Consultar
-          </a>
+            <ShoppingCart size={14} /> Agregar al carrito
+          </button>
         </div>
       </div>
     </article>
