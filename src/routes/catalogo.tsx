@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { MessageCircle, Ruler, Palette, ShoppingCart } from "lucide-react";
-import { products, type Product } from "@/data/products";
+import { products } from "@/data/products";
+import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/catalogo")({
   head: () => ({
@@ -58,7 +58,7 @@ function CatalogPage() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
@@ -71,60 +71,5 @@ function CatalogPage() {
         )}
       </section>
     </>
-  );
-}
-
-function ProductCard({ product }: { product: Product }) {
-  const handleAddToCart = () => {
-    alert(`"${product.name}" agregado al carrito`);
-  };
-
-  return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-background transition hover:-translate-y-1 hover:shadow-xl">
-      <div className="aspect-[4/3] overflow-hidden bg-muted">
-        <img
-          src={product.image}
-          alt={product.name}
-          width={600}
-          height={450}
-          loading="lazy"
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-        />
-      </div>
-      <div className="flex flex-1 flex-col p-5">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-teal)]">
-          {product.category}
-        </span>
-        <h3 className="mt-1 text-lg font-bold">{product.name}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
-
-        <ul className="mt-4 space-y-1.5 text-sm">
-          <li className="flex items-center gap-2 text-muted-foreground">
-            <Ruler size={14} className="text-[var(--brand-yellow)]" />
-            {product.size}
-          </li>
-          <li className="flex items-center gap-2 text-muted-foreground">
-            <Palette size={14} className="text-[var(--brand-pink)]" />
-            {product.color}
-          </li>
-        </ul>
-
-        <div className="mt-5 flex items-end justify-between border-t border-border pt-4">
-          <div>
-            <p className="text-[11px] uppercase tracking-wider text-muted-foreground">Desde</p>
-            <p className="text-xl font-black text-foreground">
-              ${product.price.toLocaleString("es-AR")}
-              <span className="ml-1 text-xs font-medium text-muted-foreground">/m²</span>
-            </p>
-          </div>
-          <button
-            onClick={handleAddToCart}
-            className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3.5 py-2 text-xs font-semibold text-background transition hover:bg-foreground/85"
-          >
-            <ShoppingCart size={14} /> Agregar al carrito
-          </button>
-        </div>
-      </div>
-    </article>
   );
 }

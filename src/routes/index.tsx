@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShieldCheck, Truck, Sparkles, Award } from "lucide-react";
 import heroImg from "@/assets/hero-floor.jpg";
 import { products } from "@/data/products";
+import { ProductCard } from "@/components/ProductCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -140,28 +141,7 @@ function HomePage() {
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((p) => (
-            <article
-              key={p.id}
-              className="group overflow-hidden rounded-xl border border-border bg-background transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="aspect-square overflow-hidden bg-muted">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  width={800}
-                  height={800}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-teal)]">
-                  {p.category}
-                </span>
-                <h3 className="mt-1 text-lg font-bold">{p.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{p.size} · {p.color}</p>
-              </div>
-            </article>
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>
