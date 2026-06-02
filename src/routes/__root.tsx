@@ -12,7 +12,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { CartProvider } from "@/hooks/use-cart";
 
 function NotFoundComponent() {
   return (
@@ -72,15 +72,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TPH — Todo para tu Hogar | Pisos de calidad" },
-      { name: "description", content: "TPH ofrece pisos para el hogar: laminados, vinílicos, porcelanatos y más. Calidad, variedad y atención profesional." },
+      { title: "TPH — Todo para tu Hogar | Pisos y Revestimientos" },
+      { name: "description", content: "Descubrí la mejor calidad en pisos laminados, vinílicos, porcelanatos, cerámicos y SPC. Transformamos tus espacios con estilo y durabilidad." },
+      { name: "keywords", content: "pisos, porcelanatos, laminados, vinílicos, spc, revestimientos, decoración, hogar" },
       { name: "author", content: "TPH" },
       { property: "og:title", content: "TPH — Todo para tu Hogar" },
-      { property: "og:description", content: "Pisos para el hogar con calidad y diseño." },
+      { property: "og:description", content: "Pisos y revestimientos de primera calidad para tu hogar." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "TPH" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "TPH — Todo para tu Hogar" },
+      { name: "twitter:description", content: "Pisos y revestimientos de primera calidad para tu hogar." },
     ],
     links: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -98,6 +103,8 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="es">
       <head>
         <HeadContent />
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script noModule={true} src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
       </head>
       <body>
         {children}
@@ -111,14 +118,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col bg-background">
-        <SiteHeader />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <WhatsAppButton />
-      </div>
+      <CartProvider>
+        <div className="flex min-h-screen flex-col bg-background">
+          <SiteHeader />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </div>
+      </CartProvider>
     </QueryClientProvider>
   );
 }

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowRight, ShieldCheck, Truck, Sparkles, Award } from "lucide-react";
 import heroImg from "@/assets/hero-floor.jpg";
 import { products } from "@/data/products";
@@ -7,17 +8,101 @@ import { ProductCard } from "@/components/ProductCard";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TPH — Pisos para el hogar | Inicio" },
-      { name: "description", content: "TPH especialistas en pisos para el hogar: laminados, vinílicos, porcelanatos y más. Conocé nuestro catálogo." },
-      { property: "og:title", content: "TPH — Todo para tu Hogar" },
-      { property: "og:description", content: "Pisos para el hogar con calidad y diseño." },
+      { title: "TPH — Todo para tu Hogar | Especialistas en Pisos y Revestimientos" },
+      { name: "description", content: "En TPH somos especialistas en pisos para tu hogar: laminados, vinílicos, porcelanatos, cerámicos y SPC. Renovamos tus espacios con la mejor calidad." },
+      { name: "keywords", content: "pisos laminados, pisos vinilicos, porcelanatos, ceramicos, pisos spc, tph pisos, inicio" },
+      { property: "og:title", content: "TPH — Especialistas en Pisos y Revestimientos" },
+      { property: "og:description", content: "En TPH somos especialistas en pisos para tu hogar. Renovamos tus espacios con la mejor calidad." },
     ],
   }),
   component: HomePage,
 });
 
+function AnimatedCounter({ end, prefix = "", suffix = "" }: { end: number; prefix?: string; suffix?: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime: number;
+    const duration = 2000;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      // Ease-out effect so it slows down nicely towards the end
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+      
+      setCount(Math.floor(easeOut * end));
+
+      if (progress < 1) {
+        window.requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    window.requestAnimationFrame(animate);
+  }, [end]);
+
+  return <>{prefix}{count}{suffix}</>;
+}
+
+function FadeInSection({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setIsVisible(true);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    
+    if (domRef.current) observer.observe(domRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={domRef}
+      className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function HomePage() {
   const featured = products.slice(0, 3);
+
+  const [titlePhase, setTitlePhase] = useState(0);
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const [showDesc, setShowDesc] = useState(false);
+
+  const fullText1 = "Transformá tu hogar con ";
+  const fullText2 = "pisos de calidad";
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < fullText1.length) {
+        setText1(fullText1.slice(0, i + 1));
+      } else if (i < fullText1.length + fullText2.length) {
+        if (i === fullText1.length) setTitlePhase(1);
+        setText2(fullText2.slice(0, i - fullText1.length + 1));
+      } else {
+        setTitlePhase(2);
+        setShowDesc(true);
+        clearInterval(interval);
+      }
+      i++;
+    }, 45);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -29,14 +114,21 @@ function HomePage() {
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-teal)]" />
               Pisos para tu hogar
             </span>
-            <h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Transformá tu hogar con{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 text-[var(--brand-teal)]">pisos de calidad</span>
-                <span className="absolute inset-x-0 bottom-1 -z-0 h-3 bg-[var(--brand-yellow)]/40" />
-              </span>
+            <h1 className="mt-5 min-h-[90px] text-4xl font-black leading-[1.05] tracking-tight sm:min-h-[100px] sm:text-5xl lg:min-h-0 lg:text-6xl">
+              {text1}
+              {titlePhase >= 1 && (
+                <span className="relative inline-block">
+                  <span className="relative z-10 text-[var(--brand-teal)]">{text2}</span>
+                  {titlePhase === 2 && (
+                    <span className="absolute inset-x-0 bottom-1 -z-0 h-3 animate-in fade-in duration-500 bg-[var(--brand-yellow)]/40" />
+                  )}
+                </span>
+              )}
+              {titlePhase < 2 && (
+                <span className="ml-1 animate-pulse border-r-4 border-[var(--brand-teal)]" />
+              )}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className={`mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg transition-all duration-1000 ${showDesc ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
               En TPH encontrás laminados, vinílicos, porcelanatos y más. Productos seleccionados,
               asesoramiento profesional y la mejor relación calidad-precio.
             </p>
@@ -57,19 +149,21 @@ function HomePage() {
 
             <dl className="mt-12 grid max-w-md grid-cols-3 gap-6">
               {[
-                { k: "+15", v: "Años", color: "var(--brand-teal)" },
-                { k: "+500", v: "Modelos", color: "var(--brand-pink)" },
-                { k: "100%", v: "Calidad", color: "var(--brand-yellow)" },
+                { end: 15, prefix: "+", suffix: "", v: "Años", color: "var(--brand-teal)" },
+                { end: 500, prefix: "+", suffix: "", v: "Modelos", color: "var(--brand-pink)" },
+                { end: 100, prefix: "", suffix: "%", v: "Calidad", color: "var(--brand-yellow)" },
               ].map((s) => (
                 <div key={s.v}>
-                  <dt className="text-2xl font-black" style={{ color: s.color }}>{s.k}</dt>
+                  <dt className="text-2xl font-black" style={{ color: s.color }}>
+                    <AnimatedCounter end={s.end} prefix={s.prefix} suffix={s.suffix} />
+                  </dt>
                   <dd className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{s.v}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
-          <div className="relative">
+          <div className={`relative transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="overflow-hidden rounded-2xl border border-border shadow-2xl shadow-black/5">
               <img
                 src={heroImg}
@@ -79,7 +173,7 @@ function HomePage() {
                 className="aspect-[4/3] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-border bg-background p-4 shadow-xl sm:block">
+            <div className={`absolute -bottom-6 -left-6 hidden rounded-xl border border-border bg-background p-4 shadow-xl sm:block transition-all duration-1000 delay-[400ms] ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--brand-pink)]/10">
                   <Award size={20} className="text-[var(--brand-pink)]" />
@@ -102,16 +196,19 @@ function HomePage() {
             { Icon: Truck, color: "var(--brand-pink)", t: "Envíos a todo el país", d: "Logística rápida y segura." },
             { Icon: Sparkles, color: "var(--brand-yellow)", t: "Asesoramiento", d: "Te ayudamos a elegir el piso ideal." },
             { Icon: Award, color: "var(--brand-teal)", t: "Experiencia", d: "Más de 15 años renovando hogares." },
-          ].map(({ Icon, color, t, d }) => (
-            <div key={t} className="rounded-xl border border-border bg-background p-5">
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-lg"
-                style={{ backgroundColor: `${color}1a` }}
-              >
-                <Icon size={20} style={{ color }} />
+          ].map(({ Icon, color, t, d }, i) => (
+            <div 
+              key={t} 
+              className={`group relative overflow-hidden rounded-xl border border-border bg-background p-6 transition-all duration-700 ease-out hover:border-border/80 hover:shadow-md ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ transitionDelay: isLoaded ? `${400 + i * 150}ms` : '0ms' }}
+            >
+              <div className="relative z-10 max-w-[70%]">
+                <h3 className="text-base font-bold">{t}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{d}</p>
               </div>
-              <h3 className="mt-4 text-sm font-bold">{t}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{d}</p>
+              <div className="absolute right-4 top-1/2 z-0 -translate-y-1/2 opacity-30 transition-all duration-500 group-hover:scale-110 group-hover:opacity-50">
+                <Icon size={72} style={{ color }} strokeWidth={1.5} />
+              </div>
             </div>
           ))}
         </div>
@@ -119,7 +216,7 @@ function HomePage() {
 
       {/* FEATURED PRODUCTS */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <FadeInSection className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold uppercase tracking-widest text-[var(--brand-pink)]">
               Destacados
@@ -133,24 +230,27 @@ function HomePage() {
           </div>
           <Link
             to="/catalogo"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-teal)] hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-pink)] hover:underline"
           >
             Ver todo el catálogo <ArrowRight size={16} />
           </Link>
-        </div>
+        </FadeInSection>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {featured.map((p, i) => (
+            <FadeInSection key={p.id} delay={i * 200}>
+              <ProductCard product={p} />
+            </FadeInSection>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-border bg-foreground px-8 py-14 text-background sm:px-12">
-          <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-            <div>
+        <FadeInSection>
+          <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-border bg-foreground px-8 py-14 text-background sm:px-12">
+            <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+              <div>
               <h2 className="text-3xl font-black tracking-tight sm:text-4xl">
                 ¿Listo para renovar tu hogar?
               </h2>
@@ -174,7 +274,8 @@ function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
+    </section>
     </>
   );
 }

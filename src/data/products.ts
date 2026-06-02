@@ -5,6 +5,14 @@ import floorMarble from "@/assets/floor-marble.jpg";
 import floorVinyl from "@/assets/floor-vinyl.jpg";
 import floorSpc from "@/assets/floor-spc.jpg";
 
+import ceramicHexagonal from "@/assets/ceramic-hexagonal.png";
+import ceramicRustic from "@/assets/ceramic-rustic.png";
+import laminatePineGrey from "@/assets/laminate-pine-grey.png";
+import porcelainCarrara from "@/assets/porcelain-carrara.png";
+import porcelainWood from "@/assets/porcelain-wood.png";
+import spcCherry from "@/assets/spc-cherry.png";
+import vinylDarkCement from "@/assets/vinyl-dark-cement.png";
+
 export type Product = {
   id: string;
   name: string;
@@ -76,5 +84,75 @@ export const products: Product[] = [
     price: 16990,
     image: floorSpc,
     description: "Piso SPC con núcleo mineral, máxima estabilidad y resistencia al agua.",
+  },
+  {
+    id: "ceramic-hexagonal",
+    name: "Cerámico Hexagonal Pastel",
+    category: "Cerámico",
+    color: "Tonos pastel",
+    size: "20 x 20 cm",
+    price: 13500,
+    image: ceramicHexagonal,
+    description: "Cerámico moderno de formato hexagonal en tonos pastel, ideal para cocinas y baños vanguardistas.",
+  },
+  {
+    id: "ceramic-rustic",
+    name: "Cerámico Rústico Terracota",
+    category: "Cerámico",
+    color: "Terracota",
+    size: "30 x 30 cm",
+    price: 8900,
+    image: ceramicRustic,
+    description: "Cerámico rústico con acabado mate y textura natural, perfecto para galerías y exteriores techados.",
+  },
+  {
+    id: "laminate-pine-grey",
+    name: "Laminado Pino Gris",
+    category: "Laminado",
+    color: "Gris pino",
+    size: "190 x 1380 mm",
+    price: 13490,
+    image: laminatePineGrey,
+    description: "Piso laminado AC4 con diseño de pino gris nórdico, resistente al desgaste y fácil de limpiar.",
+  },
+  {
+    id: "porcelain-carrara",
+    name: "Porcelanato Carrara",
+    category: "Porcelanato",
+    color: "Blanco veteado",
+    size: "60 x 120 cm",
+    price: 24900,
+    image: porcelainCarrara,
+    description: "Porcelanato pulido gran formato símil mármol Carrara, otorga amplitud y sofisticación.",
+  },
+  {
+    id: "porcelain-wood",
+    name: "Porcelanato Madera Roble",
+    category: "Porcelanato",
+    color: "Roble",
+    size: "20 x 120 cm",
+    price: 21500,
+    image: porcelainWood,
+    description: "Porcelanato listón símil madera natural, combina la calidez de la madera con la durabilidad del porcelanato.",
+  },
+  {
+    id: "spc-cherry",
+    name: "SPC Cerezo Cálido",
+    category: "SPC",
+    color: "Cerezo rojizo",
+    size: "180 x 1220 mm",
+    price: 17500,
+    image: spcCherry,
+    description: "Piso vinílico rígido SPC tono cerezo, 100% resistente al agua y apto para losa radiante.",
+  },
+  {
+    id: "vinyl-dark-cement",
+    name: "Vinílico Cemento Oscuro",
+    category: "Vinílico",
+    color: "Gris oscuro",
+    size: "30 x 60 cm",
+    price: 14900,
+    image: vinylDarkCement,
+    description: "Palmetas vinílicas encastrables con diseño de cemento alisado oscuro para un estilo industrial.",
   },
 ];

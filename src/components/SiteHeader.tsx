@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { CartSheet } from "./CartSheet";
+import logo from "@/assets/logo.png";
 
 const navItems = [
   { to: "/" as const, label: "Inicio" },
@@ -14,14 +16,11 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[var(--brand-teal)] font-black text-white">
-            T
-          </span>
-          <div className="flex flex-col leading-tight">
-            <span className="text-base font-black tracking-tight">TPH</span>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              Todo para tu Hogar
+        <Link to="/" className="flex items-center gap-3 transition-transform hover:scale-[1.02]" onClick={() => setOpen(false)}>
+          <img src={logo} alt="TPH Logo" className="h-10 w-auto object-contain drop-shadow-sm" />
+          <div className="flex flex-col">
+            <span className="text-base font-black uppercase tracking-wider text-foreground sm:text-lg">
+              Todo para tu hogar
             </span>
           </div>
         </Link>
@@ -46,21 +45,27 @@ export function SiteHeader() {
               )}
             </Link>
           ))}
-          <Link
-            to="/contacto"
-            className="rounded-md bg-[var(--brand-teal)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
-          >
-            Cotizar ahora
-          </Link>
+          <div className="flex items-center gap-4">
+            <CartSheet />
+            <Link
+              to="/contacto"
+              className="rounded-md bg-[var(--brand-teal)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
+            >
+              Cotizar ahora
+            </Link>
+          </div>
         </nav>
 
-        <button
-          className="rounded-md p-2 md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Menú"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <CartSheet />
+          <button
+            className="rounded-md p-2"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Menú"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {open && (
