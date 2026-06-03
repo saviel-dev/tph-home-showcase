@@ -238,7 +238,7 @@ function CotizacionPage() {
         <div className="hero-orb hero-orb-1" style={{ width: 400, height: 400, background: "#01c3cd", opacity: 0.13, top: "-60px", right: "8%" }} />
         <div className="hero-orb hero-orb-2" style={{ width: 280, height: 280, background: "#ff0084", opacity: 0.09, bottom: "-50px", left: "15%" }} />
         <div className="hero-orb hero-orb-3" style={{ width: 220, height: 220, background: "#ffbe00", opacity: 0.08, top: "10px", left: "45%" }} />
-        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div>
             <span className="inline-block rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[var(--brand-teal)] shadow-sm">
               Cotización
@@ -254,7 +254,7 @@ function CotizacionPage() {
       </section>
 
       {/* ── Step indicator + content ── */}
-      <div className="px-4 py-8">
+      <div className="px-4 py-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150 fill-mode-both">
       {/* ── Step indicator ── */}
       <div className="mx-auto max-w-2xl mb-6">
         <div className="flex items-center gap-3">

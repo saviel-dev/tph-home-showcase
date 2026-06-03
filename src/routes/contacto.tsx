@@ -93,7 +93,7 @@ function ContactPage() {
         <div className="hero-orb hero-orb-1" style={{ width: 420, height: 420, background: "#01c3cd", opacity: 0.13, top: "-80px", right: "10%" }} />
         <div className="hero-orb hero-orb-2" style={{ width: 300, height: 300, background: "#ff0084", opacity: 0.10, bottom: "-60px", left: "5%" }} />
         <div className="hero-orb hero-orb-3" style={{ width: 240, height: 240, background: "#ffbe00", opacity: 0.08, top: "20px", left: "40%" }} />
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
               <span className="inline-block rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[var(--brand-pink)] shadow-sm">
@@ -121,7 +121,7 @@ function ContactPage() {
       </section>
 
       {/* CONTENIDO */}
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[380px_1fr] lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[380px_1fr] lg:px-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150 fill-mode-both">
 
         {/* INFO */}
         <div className="space-y-3">
