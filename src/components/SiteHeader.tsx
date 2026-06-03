@@ -48,8 +48,8 @@ export function SiteHeader() {
           <div className="flex items-center gap-4">
             <CartSheet />
             <Link
-              to="/contacto"
-              className="rounded-md bg-[var(--brand-teal)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
+              to="/cotizacion"
+              className="rounded-lg bg-[var(--brand-teal)] px-5 py-2 text-sm font-bold text-white shadow-md transition-all hover:brightness-110 active:scale-95"
             >
               Cotizar ahora
             </Link>
@@ -83,7 +83,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              to="/contacto"
+              to="/cotizacion"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-md bg-[var(--brand-teal)] px-4 py-3 text-center text-sm font-semibold text-white"
             >

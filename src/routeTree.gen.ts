@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CotizacionRouteImport } from './routes/cotizacion'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as IndexRouteImport } from './routes/index'
 
+const CotizacionRoute = CotizacionRouteImport.update({
+  id: '/cotizacion',
+  path: '/cotizacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactoRoute = ContactoRouteImport.update({
   id: '/contacto',
   path: '/contacto',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
+  '/cotizacion': typeof CotizacionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
+  '/cotizacion': typeof CotizacionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
+  '/cotizacion': typeof CotizacionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalogo' | '/contacto'
+  fullPaths: '/' | '/catalogo' | '/contacto' | '/cotizacion'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalogo' | '/contacto'
-  id: '__root__' | '/' | '/catalogo' | '/contacto'
+  to: '/' | '/catalogo' | '/contacto' | '/cotizacion'
+  id: '__root__' | '/' | '/catalogo' | '/contacto' | '/cotizacion'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CatalogoRoute: typeof CatalogoRoute
   ContactoRoute: typeof ContactoRoute
+  CotizacionRoute: typeof CotizacionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/cotizacion': {
+      id: '/cotizacion'
+      path: '/cotizacion'
+      fullPath: '/cotizacion'
+      preLoaderRoute: typeof CotizacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contacto': {
       id: '/contacto'
       path: '/contacto'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CatalogoRoute: CatalogoRoute,
   ContactoRoute: ContactoRoute,
+  CotizacionRoute: CotizacionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

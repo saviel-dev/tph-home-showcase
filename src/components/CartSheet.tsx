@@ -72,7 +72,7 @@ export function CartSheet() {
     });
     message += `\nTotal estimado: $${cartTotal.toLocaleString("es-CL")}`;
 
-    const url = `https://wa.me/56912345678?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/584122865550?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 

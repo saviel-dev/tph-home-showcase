@@ -15,7 +15,7 @@ export const Route = createFileRoute("/contacto")({
   component: ContactPage,
 });
 
-const WA = "56912345678";
+const WA = "584122865550";
 
 /* ─── Types ─── */
 type FieldErrors = Partial<Record<"name" | "phone" | "email" | "message", string>>;
@@ -89,7 +89,10 @@ function ContactPage() {
     <>
       {/* HERO COMPACTO */}
       <section className="relative border-b border-border bg-[#0d0f11] overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,var(--brand-teal)/12%,transparent_60%)]" />
+        {/* Animated orbs */}
+        <div className="hero-orb hero-orb-1" style={{ width: 420, height: 420, background: "#01c3cd", opacity: 0.13, top: "-80px", right: "10%" }} />
+        <div className="hero-orb hero-orb-2" style={{ width: 300, height: 300, background: "#ff0084", opacity: 0.10, bottom: "-60px", left: "5%" }} />
+        <div className="hero-orb hero-orb-3" style={{ width: 240, height: 240, background: "#ffbe00", opacity: 0.08, top: "20px", left: "40%" }} />
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
@@ -128,13 +131,15 @@ function ContactPage() {
             <InfoRow Icon={Mail} color="var(--brand-yellow)" label="Email" value="ventas@tph.com" href="mailto:ventas@tph.com" />
             <InfoRow Icon={Clock} color="var(--brand-teal)" label="Horarios" value="Lun–Vie 9:00–18:00 · Sáb 9:00–13:00" />
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <iframe
-              title="Ubicación TPH"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-58.4173%2C-34.6118%2C-58.3673%2C-34.5818&layer=mapnik&marker=-34.5968%2C-58.3923"
-              className="h-52 w-full"
-              loading="lazy"
-            />
+          <div className="overflow-hidden rounded-2xl border border-border" style={{ height: "208px" }}>
+            <div className="relative w-full" style={{ height: "calc(208px + 40px)", marginBottom: "-40px" }}>
+              <iframe
+                title="Ubicación TPH"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-58.4173%2C-34.6118%2C-58.3673%2C-34.5818&layer=mapnik&marker=-34.5968%2C-58.3923"
+                className="absolute inset-0 h-full w-full"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 
